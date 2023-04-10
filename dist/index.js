@@ -4,11 +4,10 @@ import { typeDefs } from './schema/type_defs.js';
 import { resolvers } from './schema/resolvers.js';
 import dotenv from 'dotenv';
 dotenv.config();
-console.log(process.env.ACCESS_TOKEN, 'this is token');
+const port = parseInt(process.env.PORT) || 4000;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
 });
-console.log(process.env.ACCESS_TOKEN);
-const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });
+const { url } = await startStandaloneServer(server, { listen: { port: port } });
 console.log(`🚀 Server listening at: ${url}`);

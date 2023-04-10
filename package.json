@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "gcloud app deploy",
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
+    "start": "tsc && node ./dist/index.js",
+    "dev": "npm run compile && node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,8 +22,11 @@
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
+    "apollo-server-cloud-functions": "3.x",
+    "graphql": "^16.6.0",
     "typescript": "^5.0.3"
+  },
+  "engines": {
+    "node": "16.15.1"
   }
 }
-
-
