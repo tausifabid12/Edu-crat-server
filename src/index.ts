@@ -1,21 +1,55 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone'
+const { Neo4jGraphQL } = require("@neo4j/graphql");
+const neo4j = require('neo4j-driver');
 import {typeDefs} from './schema/type_defs.js';
 import{ resolvers} from './schema/resolvers.js';
+
+
 import dotenv from 'dotenv';
 dotenv.config();
-
 const port = parseInt(process.env.PORT) || 4000;
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
+
+// DB connection
+
+const uri = 'neo4j+s://64141c35.databases.neo4j.io';
+const user = 'neo4j';
+const password = 'H80V-mOeoVp0SnFv-yaFB-qAdbi5mkUNQETWW-K5ZFw';
+const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
+
+//exporting session
+export const session = driver.session({ database: 'neo4j' })
+const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
 
 
-const { url } = await startStandaloneServer(server, { listen: { port: port } });
 
-console.log(`🚀 Server listening at: ${url}`);
+
+
+
+neoSchema.getSchema().then( async (schema) => {
+  const server = new ApolloServer({
+      schema,
+  });
+
+
+  const { url } = await startStandaloneServer(server, { listen: { port: port } });
+  console.log(`🚀 Server listening at: ${url}`);
+
+})
+
+
+
+
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+// });
+
+
+
 
 
 
