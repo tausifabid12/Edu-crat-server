@@ -16,16 +16,13 @@ const port = parseInt(process.env.PORT) || 4000;
 // DB connection
 
 const uri = 'neo4j+s://64141c35.databases.neo4j.io';
-const user = 'neo4j';
-const password = 'H80V-mOeoVp0SnFv-yaFB-qAdbi5mkUNQETWW-K5ZFw';
+const user = process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
 const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
 
 //exporting session
 export const session = driver.session({ database: 'neo4j' })
 const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
-
-
-
 
 
 
@@ -43,10 +40,6 @@ neoSchema.getSchema().then( async (schema) => {
 
 
 
-// const server = new ApolloServer({
-//   typeDefs,
-//   resolvers,
-// });
 
 
 
