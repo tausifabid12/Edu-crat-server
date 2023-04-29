@@ -1,5 +1,4 @@
 export  const typeDefs = `#graphql
-
 type User {
   id: String!
   email: String
@@ -10,7 +9,9 @@ type User {
   image: String
   lsocialAccounts: [SocialAccount]
   type: String!
+  city: [City]
   hasSocialAccountsSocialaccount: SocialAccount @relationship(type: "HAS_SOCIAL_ACCOUNTs", direction: OUT)
+  hasAddressCity: City @relationship(type: "HAS_ADDRESS", direction: OUT)
   collegeaccountControledBy: CollegeAccount @relationship(type: "CONTROLED_BY", direction: IN)
   studentaccountHasUser: StudentAccount @relationship(type: "HAS_USER", direction: IN)
   employeeaccountHasUser: EmployeeAccount @relationship(type: "HAS_USER", direction: IN)
@@ -24,20 +25,21 @@ type CollegeAccount {
   description: String!
   reviews: [Review]
   degree: [Degree]
-  studyMode: String
+  studyMode: String!
   instituteType: [InstituteType]
   campus: [Campus]
   admissionMode: [AdmissionMode]
   awards: [Awards]
   campaigns: [Campaigns]
   applicationLink: String
-  broucher: String
   estd: String
-  ranking: Int
-  ugcApproved: Boolean!
+  ranking: Int!
   user: User
   image: String
   endorsedBy: String
+  city: [City]
+  applicationFee: Int
+  Recruiter: [Recruiter]
   hasReviewsReview: Review @relationship(type: "HAS_REVIEWS", direction: OUT)
   hasAdmissionModeAdmissionmode: AdmissionMode @relationship(type: "HAS_ADMISSION_MODE", direction: OUT)
   hasCampusCampus: Campus @relationship(type: "HAS_CAMPUS", direction: OUT)
@@ -50,14 +52,17 @@ type CollegeAccount {
   controledByUser: User @relationship(type: "CONTROLED_BY", direction: OUT)
   hasLeadsLeads: Leads @relationship(type: "HAS_LEADS", direction: OUT)
   businessAddressAddress: Address @relationship(type: "BUSINESS_ADDRESS", direction: OUT)
+  hasWrittenBlog: Blog @relationship(type: "HAS_WRITTEN", direction: OUT)
+  businessAddressCity: City @relationship(type: "BUSINESS_ADDRESS", direction: OUT)
+  hasRecruterRecruiter: Recruiter @relationship(type: "HAS_RECRUTER", direction: OUT)
+  blogWrittenBy: Blog @relationship(type: "WRITTEN_BY", direction: IN)
 }
 
 
 enum InstituteType {
-PRIVATE
-PUBLIC
-
-}
+  PRIVATE
+  PUBLIC
+  }
 
 type Campus {
   id: String!
@@ -65,11 +70,15 @@ type Campus {
   faculties: [Faculties]
   reviews: [Review]
   hostel: [Hostel]
+  city: [City]
+  image: [Image]
   collegeaccountHasCampus: CollegeAccount @relationship(type: "HAS_CAMPUS", direction: IN)
   hasHostelsHostel: Hostel @relationship(type: "HAS_HOSTELS", direction: OUT)
   hasReviewsReview: Review @relationship(type: "HAS_REVIEWS", direction: OUT)
   hasFacultiesFaculties: Faculties @relationship(type: "HAS_FACULTIES", direction: OUT)
   hasAddressAddress: Address @relationship(type: "HAS_ADDRESS", direction: OUT)
+  hasAddressCity: City @relationship(type: "HAS_ADDRESS", direction: OUT)
+  hasImageImage: Image @relationship(type: "HAS_IMAGE", direction: OUT)
 }
 
 type Faculties {
@@ -93,8 +102,11 @@ type Degree {
   id: String!
   name: String!
   specialization: [DegreeSpecialization]
+  brochure: [Brochure]
   collegeaccountHasDegree: CollegeAccount @relationship(type: "HAS_DEGREE", direction: IN)
   hasDegreeSpecializationsDegreespecialization: DegreeSpecialization @relationship(type: "HAS_DEGREE_SPECIALIZATIONS", direction: OUT)
+  hasBrochureBrochure: Brochure @relationship(type: "HAS_BROCHURE", direction: OUT)
+  requiredElegibilityElegibilitycriteria: ElegibilityCriteria @relationship(type: "REQUIRED_ELEGIBILITY", direction: OUT)
 }
 
 type DegreeSpecialization {
@@ -103,6 +115,8 @@ type DegreeSpecialization {
   elegibilityCriteria: [ElegibilityCriteria]
   feeStructure: [FeeStructure]
   reviews: [Review]
+  seats: Int
+  duration: String!
   degreeHasDegreeSpecializations: Degree @relationship(type: "HAS_DEGREE_SPECIALIZATIONS", direction: IN)
   requiredElegibilityElegibilitycriteria: ElegibilityCriteria @relationship(type: "REQUIRED_ELEGIBILITY", direction: OUT)
   hasEnteranceExamExam: Exam @relationship(type: "HAS_ENTERANCE_EXAM", direction: OUT)
@@ -147,14 +161,15 @@ type Hostel {
 
 type Event {
   id: String!
-  name: String
+  name: String!
   startAt: DateTime
   endAt: DateTime
   image: String
   description: String
   price: Int!
-  city: String
+  city: [City]
   collegeaccountHasEvents: CollegeAccount @relationship(type: "HAS_EVENTS", direction: IN)
+  hasAddressCity: City @relationship(type: "HAS_ADDRESS", direction: OUT)
 }
 
 type Address {
@@ -171,14 +186,14 @@ type Exam {
   name: String!
   applicationStart: DateTime
   applicationEnd: DateTime
-  examDate: DateTime
-  image:String
   result: DateTime
   status: String
   description: String
   process: String
   level: String
   mode: String
+  examData: DateTime
+  image: String
   degreespecializationHasEnteranceExam: DegreeSpecialization @relationship(type: "HAS_ENTERANCE_EXAM", direction: IN)
   adminaccountControledBy: AdminAccount @relationship(type: "CONTROLED_BY", direction: IN)
 }
@@ -242,7 +257,9 @@ type EmployeeAccount {
   user: User!
   hasUserUser: User @relationship(type: "HAS_USER", direction: OUT)
   subscribedChatChannelChat: Chat @relationship(type: "SUBSCRIBED_CHAT_CHANNEL", direction: OUT)
+  hasWrittenBlog: Blog @relationship(type: "HAS_WRITTEN", direction: OUT)
   leadsAssistedBy: Leads @relationship(type: "ASSISTED_BY", direction: IN)
+  blogWrittenBy: Blog @relationship(type: "WRITTEN_BY", direction: IN)
 }
 
 type AdminAccount {
@@ -298,7 +315,90 @@ type Courses {
 type FeeStructure {
   id: String!
   description: String!
+  semister: String!
   degreespecializationHasFeeStructure: DegreeSpecialization @relationship(type: "HAS_FEE_STRUCTURE", direction: IN)
+  hasSemesterSemester: Semester @relationship(type: "HAS_SEMESTER", direction: OUT)
+}
+
+type Semester {
+  id: String!
+  name: String!
+  price: Int!
+  feestructureHasSemester: FeeStructure @relationship(type: "HAS_SEMESTER", direction: IN)
+}
+
+type Blog {
+  id: String!
+  title: String!
+  content: String!
+  topic: String
+  image: String!
+  tags: [Tags]
+  collegeaccountHasWritten: CollegeAccount @relationship(type: "HAS_WRITTEN", direction: IN)
+  employeeaccountHasWritten: EmployeeAccount @relationship(type: "HAS_WRITTEN", direction: IN)
+  hasTagTags: Tags @relationship(type: "HAS_TAG", direction: OUT)
+  writtenByCollegeaccount: CollegeAccount @relationship(type: "WRITTEN_BY", direction: OUT)
+  writtenByEmployeeaccount: EmployeeAccount @relationship(type: "WRITTEN_BY", direction: OUT)
+}
+
+type Tags {
+  id: String!
+  nane: String!
+  blogHasTag: Blog @relationship(type: "HAS_TAG", direction: IN)
+}
+
+type Brochure {
+  id: String!
+  link: String!
+  degreeHasBrochure: Degree @relationship(type: "HAS_BROCHURE", direction: IN)
+}
+
+type Country {
+  id: String!
+  name: String!
+  hasStateState: State @relationship(type: "HAS_STATE", direction: OUT)
+  stateInsideCountr: State @relationship(type: "INSIDE_COUNTR", direction: IN)
+}
+
+type State {
+  id: String!
+  name: String!
+  zip: String
+  countryHasState: Country @relationship(type: "HAS_STATE", direction: IN)
+  hasCityCity: City @relationship(type: "HAS_CITY", direction: OUT)
+  insideCountrCountry: Country @relationship(type: "INSIDE_COUNTR", direction: OUT)
+  cityInsideState: City @relationship(type: "INSIDE_STATE", direction: IN)
+}
+
+type City {
+  id: String!
+  name: String!
+  userHasAddress: User @relationship(type: "HAS_ADDRESS", direction: IN)
+  collegeaccountBusinessAddress: CollegeAccount @relationship(type: "BUSINESS_ADDRESS", direction: IN)
+  campusHasAddress: Campus @relationship(type: "HAS_ADDRESS", direction: IN)
+  eventHasAddress: Event @relationship(type: "HAS_ADDRESS", direction: IN)
+  stateHasCity: State @relationship(type: "HAS_CITY", direction: IN)
+  insideStateState: State @relationship(type: "INSIDE_STATE", direction: OUT)
+}
+
+type Image {
+  id: String!
+  link: String!
+  description: String
+  campusHasImage: Campus @relationship(type: "HAS_IMAGE", direction: IN)
+}
+
+type Recruiter {
+  id: String!
+  image: String!
+  name: String
+  collegeaccountHasRecruter: CollegeAccount @relationship(type: "HAS_RECRUTER", direction: IN)
+}
+
+type ElegibilityCriteria {
+  id: String!
+  name: String!
+  degreeRequiredElegibility: Degree @relationship(type: "REQUIRED_ELEGIBILITY", direction: IN)
 }
 
 interface HasAdSets {
