@@ -2,13 +2,14 @@ export  const typeDefs = `
 type User {
   id: String!
   email: String
-  createdAt: DateTime!
-  phoneNumber: Int!
-  firstName: String!
-  lastName: String!
+  createdAt: DateTime
+  phoneNumber: Int
+  firstName: String
+  lastName: String
   profileImageUrl: String
   coverImageUrl: String
-  currentUserMode: String!
+  currentUserMode: String
+  bio: String
   hasSociallink: SocialLink @relationship(type: "HAS", direction: OUT)
   hasCollection: Collection @relationship(type: "HAS", direction: OUT)
   hasDownload: Download @relationship(type: "HAS", direction: OUT)
@@ -34,6 +35,7 @@ type College {
   applicationFees: Int
   type: String
   affiliation: String
+  CollegeLogo:String
   recognizedBy: String
   hasReview: Review @relationship(type: "HAS", direction: OUT)
   hasCampus: Campus @relationship(type: "HAS", direction: OUT)
@@ -70,7 +72,7 @@ type Campus {
   hasReview: Review @relationship(type: "HAS", direction: OUT)
   hasFaculties: Faculties @relationship(type: "HAS", direction: OUT)
   hasAddress: Address @relationship(type: "HAS", direction: OUT)
-  hasFacalities: Facalities @relationship(type: "HAS", direction: OUT)
+  hasFacilities: Facilities @relationship(type: "HAS", direction: OUT)
   hasDegreeDegree: Degree @relationship(type: "HAS", direction: OUT)
   hasAdmissionmode: AdmissionMode @relationship(type: "HAS", direction: OUT)
   collectionHas: Collection @relationship(type: "HAS", direction: IN)
@@ -97,7 +99,8 @@ type AdmissionMode {
 type Degree {
   id: String!
   name: String!
-  brochure: [Brochure]
+  brochure: String
+  description: String
   campusHasDegree: Campus @relationship(type: "HAS", direction: IN)
   hasDegreespecialization: DegreeSpecialization @relationship(type: "HAS", direction: OUT)
 }
@@ -186,14 +189,11 @@ type Exam {
   id: String!
   name: String!
   image: String
-  applicationStart: DateTime
-  result: DateTime
   status: String
   description: String
   process: String
   level: String
   mode: String
-  examData: DateTime
   degreespecializationHas: DegreeSpecialization @relationship(type: "HAS", direction: IN)
 }
 
@@ -246,6 +246,8 @@ type AdsPromoPackage {
 
 type Student {
   id: String!
+  school: String
+  stream: String
   hasUser: User @relationship(type: "HAS", direction: OUT)
   hasCourse: Course @relationship(type: "HAS", direction: OUT)
 }
@@ -375,11 +377,12 @@ type City {
   hasState: State @relationship(type: "HAS", direction: OUT)
 }
 
-type Facalities {
+type Facilities {
   id: String
   description: String!
   coverImageUrl: String
   type: String!
+  status:Boolean
   campusHas: Campus @relationship(type: "HAS", direction: IN)
 }
 
