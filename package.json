@@ -9,6 +9,7 @@
     "compile": "tsc",
     "start": "node ./dist/index.js",
     "dev": "npm run compile && node ./dist/index.js"
+    
   },
   "keywords": [],
   "author": "",
@@ -17,10 +18,12 @@
   "dependencies": {
     "@apollo/server": "^4.6.0",
     "@neo4j/graphql": "^3.18.1",
+    "@neo4j/graphql-plugin-auth": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "jsonwebtoken": "^9.0.0",
-    "neo4j-driver": "^5.7.0"
+    "neo4j-driver": "^5.7.0",
+    "node-fetch": "^3.3.1"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
@@ -29,6 +32,6 @@
     "typescript": "^5.0.3"
   },
   "engines": {
-    "node": "16.15.1"
+    "node": "16.20.2"
   }
 }

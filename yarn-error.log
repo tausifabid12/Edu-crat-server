@@ -1,0 +1,67 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\USER\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js dev
+
+PATH: 
+  C:\Python310\Scripts\;C:\Python310\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\xampp\php;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\dotnet\;C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\nodejs\;C:\Users\USER\scoop\shims;C:\Users\USER\AppData\Local\Microsoft\WindowsApps;C:\Users\USER\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\USER\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\USER\AppData\Roaming\npm
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.18.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: F:\Office\1st work\UPDATE_SERVER\package.json: Unexpected token } in JSON at position 318
+      at JSON.parse (<anonymous>)
+      at C:\Users\USER\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\USER\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\USER\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "new_curd",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "deploy": "gcloud app deploy",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "compile": "tsc",
+      "start": "node ./dist/index.js",
+      "dev": "npm run compile && node ./dist/index.js",
+      
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "module",
+    "dependencies": {
+      "@apollo/server": "^4.6.0",
+      "@neo4j/graphql": "^3.18.1",
+      "@neo4j/graphql-plugin-auth": "^2.2.0",
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.3",
+      "jsonwebtoken": "^9.0.0",
+      "neo4j-driver": "^5.7.0",
+      "node-fetch": "^3.3.1"
+    },
+    "devDependencies": {
+      "@types/node": "^18.15.11",
+      "apollo-server-cloud-functions": "3.x",
+      "graphql": "^16.6.0",
+      "typescript": "^5.0.3"
+    },
+    "engines": {
+      "node": "18.18.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

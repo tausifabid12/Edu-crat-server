@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 const { sign } = jwt;
 export const resolvers = {
-    Query: {},
     Mutation: {
         signUp: (parent, args) => {
             // send args to the database to save user
@@ -28,3 +27,23 @@ export const resolvers = {
         }
     }
 };
+// Mutation: {
+//   login: async (_, { email, password }) => {
+//     // Authenticate the user and generate the access token
+//     const user = await authenticateUser(email, password);
+//     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: '1h' });
+//     return {
+//       user,
+//       accessToken // Include the access token in the response
+//     };
+//   },
+//   signup: async (_, { name, email, password }) => {
+//     // Create a new user and generate the access token
+//     const user = await createUser(name, email, password);
+//     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: '1h' });
+//     return {
+//       user,
+//       accessToken // Include the access token in the response
+//     };
+//   },
+// }

@@ -3,5 +3,5 @@ env: standard
 env_variables:
   ACCESS_TOKEN: wAgVDuBq7BaNyluoKdHDiAsdfkljsfsdakfjdfsfsjjfsfjorywetyrfhdsncvasfsahflkdsfosdhfjfsafhSFSFSFSDFSAFakiljsdflaj
   DB_USER: neo4j
-  DB_PASSWORD: H80V-mOeoVp0SnFv-yaFB-qAdbi5mkUNQETWW-K5ZFw
-  DB_URI: neo4j+s://64141c35.databases.neo4j.io
+  DB_PASSWORD: orBrMW4g5jcjamPWY9VN345pbWDtk0J6cal2aCIXlPA
+  DB_URI: neo4j+s://8e76d565.databases.neo4j.io
